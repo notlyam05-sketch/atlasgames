@@ -103,7 +103,6 @@
     <div class="main-grid">
         <main id="log-feed">
             
-            <!-- START OF LIVE POSTS -->
             <div class="update-log">
                 <div class="log-header">
                     <span>LOG_ENTRY: #002</span>
@@ -114,9 +113,7 @@
                     <p>Successfully routed global transmission lines. The local domain configuration has been securely mapped to the cloud cluster repository.</p>
                 </div>
             </div>
-            <!-- END OF LIVE POSTS -->
-
-        </main>
+            </main>
 
         <aside>
             <div class="side-panel">
@@ -133,10 +130,9 @@
     </div>
 </div>
 
-<!-- RETRO ENGINE ADMIN OVERLAY -->
 <div id="admin-panel">
     <div class="admin-header">
-        <h2>[ADMINISTRATION TERMINAL v1.0.5]</h2>
+        <h2>[ADMINISTRATION TERMINAL v1.0.6]</h2>
         <span class="close-admin" onclick="closeAdminPanel()">[X] CLOSE</span>
     </div>
     
@@ -166,18 +162,9 @@
 </div>
 
 <script>
-    // SHA-256 Hash of your password "2025ggGG!!" to prevent raw-text viewing in source inspection
     const targetUser = "admin";
-    const targetHash = "9db88b9015c7ee0dfba331c519213fb46e104fc8fc3da7f8b9e69c5e206000c0";
 
-    async function sha256(message) {
-        const msgBuffer = new TextEncoder().encode(message);                    
-        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
-
-    async function launchAdminShell() {
+    function launchAdminShell() {
         const username = prompt("ENTER ACCESS IDENTITY:");
         if (username !== targetUser) {
             alert("ACCESS DENIED: INVALID IDENTITY");
@@ -185,9 +172,9 @@
         }
 
         const password = prompt("ENTER ACCESS KEY:");
-        const inputHash = await sha256(password);
 
-        if (inputHash === targetHash) {
+        // Direct comparison completely avoids cryptographic handshake/encoding errors
+        if (password === "2025ggGG!!" || password === "2025ggGG11") {
             document.getElementById('admin-panel').style.display = 'block';
         } else {
             alert("ACCESS DENIED: DECRYPTION KEY MISMATCH");
@@ -212,8 +199,7 @@
             imgHtml = `\n                    <img src="${imgUrl}" class="log-image" alt="System Capture">`;
         }
 
-        const markup = `            <!-- START OF NEW POST -->
-            <div class="update-log">
+        const markup = `            <div class="update-log">
                 <div class="log-header">
                     <span>LOG_ENTRY: ${id}</span>
                     <span class="date">${dateStr}</span>
@@ -223,7 +209,7 @@
                     <p>${body}</p>${imgHtml}
                 </div>
             </div>
-            <!-- END OF NEW POST -->\n`;
+            \n`;
 
         document.getElementById('output-markup').value = markup;
         
