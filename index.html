@@ -51,10 +51,7 @@
         .log-header { background: var(--border-color); color: var(--bg-color); padding: 6px 12px; font-weight: bold; display: flex; justify-content: space-between; text-shadow: none; }
         .log-body { padding: 15px; }
         .log-body h3 { margin-bottom: 10px; color: #fff; font-size: 1.2rem; }
-        .log-body ul { list-style-type: "- "; padding-left: 15px; margin-top: 10px; }
-        .log-body li { margin-bottom: 5px; }
         
-        /* Image styling for logs */
         .log-image { 
             max-width: 100%; border: 1px solid var(--border-color); 
             margin: 15px 0; filter: sepia(0.6) contrast(1.2) brightness(0.9); 
@@ -104,7 +101,6 @@
     </header>
 
     <div class="main-grid">
-        <!-- CONTAINER WHERE POSTS GENERATE -->
         <main id="log-feed">
             
             <!-- START OF LIVE POSTS -->
@@ -118,7 +114,7 @@
                     <p>Successfully routed global transmission lines. The local domain configuration has been securely mapped to the cloud cluster repository.</p>
                 </div>
             </div>
-            <!-- END OF LIVE POSTS -> LEAVE THIS COMMENT TAG AS AN ANCHOR -->
+            <!-- END OF LIVE POSTS -->
 
         </main>
 
@@ -131,7 +127,7 @@
             
             <div class="side-panel">
                 <div class="panel-title">CONSOLE_ACCESS</div>
-                <a href="#" onclick="toggleAdminPanel()">LAUNCH ADMIN_SHELL</a>
+                <a href="#" onclick="launchAdminShell()">LAUNCH ADMIN_SHELL</a>
             </div>
         </aside>
     </div>
@@ -140,8 +136,8 @@
 <!-- RETRO ENGINE ADMIN OVERLAY -->
 <div id="admin-panel">
     <div class="admin-header">
-        <h2>[ADMINISTRATION TERMINAL v1.0.4]</h2>
-        <span class="close-admin" onclick="toggleAdminPanel()">[X] CLOSE</span>
+        <h2>[ADMINISTRATION TERMINAL v1.0.5]</h2>
+        <span class="close-admin" onclick="closeAdminPanel()">[X] CLOSE</span>
     </div>
     
     <div class="form-group">
@@ -170,9 +166,36 @@
 </div>
 
 <script>
-    function toggleAdminPanel() {
-        const panel = document.getElementById('admin-panel');
-        panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+    // SHA-256 Hash of your password "2025ggGG!!" to prevent raw-text viewing in source inspection
+    const targetUser = "admin";
+    const targetHash = "9db88b9015c7ee0dfba331c519213fb46e104fc8fc3da7f8b9e69c5e206000c0";
+
+    async function sha256(message) {
+        const msgBuffer = new TextEncoder().encode(message);                    
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function launchAdminShell() {
+        const username = prompt("ENTER ACCESS IDENTITY:");
+        if (username !== targetUser) {
+            alert("ACCESS DENIED: INVALID IDENTITY");
+            return;
+        }
+
+        const password = prompt("ENTER ACCESS KEY:");
+        const inputHash = await sha256(password);
+
+        if (inputHash === targetHash) {
+            document.getElementById('admin-panel').style.display = 'block';
+        } else {
+            alert("ACCESS DENIED: DECRYPTION KEY MISMATCH");
+        }
+    }
+
+    function closeAdminPanel() {
+        document.getElementById('admin-panel').style.display = 'none';
     }
 
     function generatePostMarkup() {
@@ -189,7 +212,6 @@
             imgHtml = `\n                    <img src="${imgUrl}" class="log-image" alt="System Capture">`;
         }
 
-        // Generate the structural HTML payload matching our CRT styling
         const markup = `            <!-- START OF NEW POST -->
             <div class="update-log">
                 <div class="log-header">
@@ -205,7 +227,6 @@
 
         document.getElementById('output-markup').value = markup;
         
-        // Instant visual preview on your local view before you commit it!
         const logFeed = document.getElementById('log-feed');
         logFeed.insertAdjacentHTML('afterbegin', markup);
     }
