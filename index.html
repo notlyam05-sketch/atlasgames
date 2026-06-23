@@ -1,1 +1,257 @@
-<h1>HI</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATLAS GAMES // TERMINAL_MAIN</title>
+    <style>
+        /* --- RETRO TERMINAL THEME --- */
+        :root {
+            --glow-color: #ffb000; /* Amber Phosphor (Change to #33ff33 for Green) */
+            --bg-color: #0d0a05;
+            --panel-bg: rgba(25, 18, 7, 0.85);
+            --border-color: #593e13;
+            --text-dark: #a67324;
+            --font-stack: "Courier New", Courier, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--glow-color);
+            font-family: var(--font-stack);
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 20px;
+            overflow-x: hidden;
+            text-shadow: 0 0 4px rgba(255, 176, 0, 0.6);
+        }
+
+        /* --- CRT SCREEN EFFECTS --- */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 9999;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+
+        /* --- TERMINAL LAYOUT --- */
+        .terminal-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            border: 2px solid var(--border-color);
+            background: var(--panel-bg);
+            padding: 20px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 15px rgba(89, 62, 19, 0.3);
+        }
+
+        header {
+            border-bottom: 2px dashed var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .header-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid { grid-template-columns: 1fr; }
+        }
+
+        /* --- LOGS / UPDATES SECTION --- */
+        .update-log {
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .log-header {
+            background: var(--border-color);
+            color: var(--bg-color);
+            padding: 6px 12px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            text-shadow: none;
+        }
+
+        .log-header .date { font-weight: normal; }
+
+        .log-body {
+            padding: 15px;
+        }
+
+        .log-body h3 {
+            margin-bottom: 10px;
+            color: #fff;
+            font-size: 1.2rem;
+        }
+
+        .log-body ul {
+            list-style-type: "- ";
+            padding-left: 15px;
+            margin-top: 10px;
+        }
+
+        .log-body li {
+            margin-bottom: 5px;
+        }
+
+        /* --- SIDEBAR INFO PANEL --- */
+        aside {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .side-panel {
+            border: 1px dashed var(--border-color);
+            padding: 15px;
+            background: rgba(10, 6, 2, 0.5);
+        }
+
+        .panel-title {
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        /* --- UTILITIES & LINKS --- */
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        
+        .status-online { color: #33ff33; text-shadow: 0 0 4px #33ff33; }
+        .status-load { color: #ff3333; text-shadow: 0 0 4px #ff3333; }
+
+        a {
+            color: var(--glow-color);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--glow-color);
+        }
+
+        a:hover {
+            background: var(--glow-color);
+            color: var(--bg-color);
+            text-shadow: none;
+            cursor: pointer;
+        }
+
+        .blink {
+            animation: blinker 1.2s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="terminal-container">
+    
+    <!-- SYSTEM HEADER -->
+    <header>
+        <div class="header-title">ATLAS_GAMES // SYS_LOG</div>
+        <div>STATION: CORE_NODES // ARCHIVE_MODE: ACTIVE</div>
+        <div>--------------------------------------------------</div>
+    </header>
+
+    <!-- MAIN INTERFACE -->
+    <div class="main-grid">
+        
+        <!-- DEVLOGS COLUMN -->
+        <main>
+            
+            <!-- UPDATE ENTRY 02 -->
+            <div class="update-log">
+                <div class="log-header">
+                    <span>LOG_ENTRY: #002</span>
+                    <span class="date">2026.06.23</span>
+                </div>
+                <div class="log-body">
+                    <h3>SYSTEM STABILIZATION & WEB PIPELINE</h3>
+                    <p>Successfully routed global transmission lines. The local domain configuration has been securely mapped to the cloud cluster repository. Network handshake anomalies resolved.</p>
+                    <ul>
+                        <li>Implemented strict structural routing updates.</li>
+                        <li>Configured primary host records to balance incoming data payloads.</li>
+                        <li>Initialized public deployment framework.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- UPDATE ENTRY 01 -->
+            <div class="update-log">
+                <div class="log-header">
+                    <span>LOG_ENTRY: #001</span>
+                    <span class="date">2026.06.15</span>
+                </div>
+                <div class="log-body">
+                    <h3>PROJECT INITIALIZATION</h3>
+                    <p>Core sandbox tools established. Commencing setup on localized gameplay logic loops, state management architecture, and basic asset pipelines.</p>
+                    <ul>
+                        <li>Established event-bus infrastructure for zero-coupling messaging.</li>
+                        <li>Drafted structural data arrays for engine-level object handling.</li>
+                        <li>Grid translation vectors validated successfully.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- DIAGNOSTICS SIDEBAR -->
+        <aside>
+            
+            <!-- CURRENT STATUS -->
+            <div class="side-panel">
+                <div class="panel-title">SYSTEM_STATUS</div>
+                <div class="status-row"><span>HOST:</span> <span>ATLAS-GAMES.NET</span></div>
+                <div class="status-row"><span>NET_CORE:</span> <span class="status-online">ONLINE</span></div>
+                <div class="status-row"><span>SECURITY:</span> <span>HTTPS_ENFORCED</span></div>
+                <div class="status-row"><span>SYS_LOAD:</span> <span class="status-load">CRITICAL</span></div>
+            </div>
+
+            <!-- PROJECTS INDEX -->
+            <div class="side-panel">
+                <div class="panel-title">ACTIVE_PROJECTS</div>
+                <p style="margin-bottom: 8px;">[PROJECT_01]</p>
+                <p style="font-size: 12px; color: var(--text-dark); margin-bottom: 12px;">
+                    A tactical retro-futurist survival framework built with modular grid execution.
+                </p>
+                <a href="#">ACCESS PROTOCOL DATA_M</a>
+            </div>
+
+            <!-- TERMINAL FOOTER -->
+            <div class="side-panel" style="border: none; font-size: 12px; color: var(--text-dark);">
+                <span>AWAITING INPUT_</span><span class="blink">■</span>
+            </div>
+
+        </aside>
+
+    </div>
+</div>
+
+</body>
+</html>
