@@ -7,7 +7,7 @@
     <style>
         /* --- RETRO TERMINAL THEME --- */
         :root {
-            --glow-color: #ffb000; /* Amber Phosphor (Change to #33ff33 for Green) */
+            --glow-color: #ffb000; 
             --bg-color: #0d0a05;
             --panel-bg: rgba(25, 18, 7, 0.85);
             --border-color: #593e13;
@@ -15,12 +15,7 @@
             --font-stack: "Courier New", Courier, monospace;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background-color: var(--bg-color);
             color: var(--glow-color);
@@ -32,160 +27,87 @@
             text-shadow: 0 0 4px rgba(255, 176, 0, 0.6);
         }
 
-        /* --- CRT SCREEN EFFECTS --- */
+        /* --- CRT SCREEN SCANLINES --- */
         body::before {
-            content: " ";
-            display: block;
-            position: fixed;
+            content: " "; display: block; position: fixed;
             top: 0; left: 0; bottom: 0; right: 0;
             background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 9999;
-            background-size: 100% 4px, 6px 100%;
-            pointer-events: none;
+            z-index: 9999; background-size: 100% 4px, 6px 100%; pointer-events: none;
         }
 
-        /* --- TERMINAL LAYOUT --- */
         .terminal-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            border: 2px solid var(--border-color);
-            background: var(--panel-bg);
-            padding: 20px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 15px rgba(89, 62, 19, 0.3);
+            max-width: 1100px; margin: 0 auto;
+            border: 2px solid var(--border-color); background: var(--panel-bg);
+            padding: 20px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 15px rgba(89, 62, 19, 0.3);
         }
 
-        header {
-            border-bottom: 2px dashed var(--border-color);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
+        header { border-bottom: 2px dashed var(--border-color); padding-bottom: 15px; margin-bottom: 20px; }
+        .header-title { font-size: 1.8rem; font-weight: bold; letter-spacing: 2px; }
+        .main-grid { display: grid; grid-template-columns: 3fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
 
-        .header-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .main-grid { grid-template-columns: 1fr; }
-        }
-
-        /* --- LOGS / UPDATES SECTION --- */
-        .update-log {
-            margin-bottom: 30px;
-            border: 1px solid var(--border-color);
-            background: rgba(0, 0, 0, 0.4);
-        }
-
-        .log-header {
-            background: var(--border-color);
-            color: var(--bg-color);
-            padding: 6px 12px;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            text-shadow: none;
-        }
-
-        .log-header .date { font-weight: normal; }
-
-        .log-body {
-            padding: 15px;
-        }
-
-        .log-body h3 {
-            margin-bottom: 10px;
-            color: #fff;
-            font-size: 1.2rem;
-        }
-
-        .log-body ul {
-            list-style-type: "- ";
-            padding-left: 15px;
-            margin-top: 10px;
-        }
-
-        .log-body li {
-            margin-bottom: 5px;
-        }
-
-        /* --- SIDEBAR INFO PANEL --- */
-        aside {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .side-panel {
-            border: 1px dashed var(--border-color);
-            padding: 15px;
-            background: rgba(10, 6, 2, 0.5);
-        }
-
-        .panel-title {
-            font-weight: bold;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        /* --- UTILITIES & LINKS --- */
-        .status-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 6px;
-        }
+        /* --- DEVLOGS SECTION --- */
+        .update-log { margin-bottom: 30px; border: 1px solid var(--border-color); background: rgba(0, 0, 0, 0.4); }
+        .log-header { background: var(--border-color); color: var(--bg-color); padding: 6px 12px; font-weight: bold; display: flex; justify-content: space-between; text-shadow: none; }
+        .log-body { padding: 15px; }
+        .log-body h3 { margin-bottom: 10px; color: #fff; font-size: 1.2rem; }
+        .log-body ul { list-style-type: "- "; padding-left: 15px; margin-top: 10px; }
+        .log-body li { margin-bottom: 5px; }
         
+        /* Image styling for logs */
+        .log-image { 
+            max-width: 100%; border: 1px solid var(--border-color); 
+            margin: 15px 0; filter: sepia(0.6) contrast(1.2) brightness(0.9); 
+        }
+
+        /* --- SIDEBAR --- */
+        aside { display: flex; flex-direction: column; gap: 20px; }
+        .side-panel { border: 1px dashed var(--border-color); padding: 15px; background: rgba(10, 6, 2, 0.5); }
+        .panel-title { font-weight: bold; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase; }
+        .status-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
         .status-online { color: #33ff33; text-shadow: 0 0 4px #33ff33; }
-        .status-load { color: #ff3333; text-shadow: 0 0 4px #ff3333; }
+        a { color: var(--glow-color); text-decoration: none; border-bottom: 1px dotted var(--glow-color); }
+        a:hover { background: var(--glow-color); color: var(--bg-color); text-shadow: none; cursor: pointer; }
+        .blink { animation: blinker 1.2s linear infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
 
-        a {
-            color: var(--glow-color);
-            text-decoration: none;
-            border-bottom: 1px dotted var(--glow-color);
+        /* --- ADMIN OVERLAY PANEL --- */
+        #admin-panel {
+            display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 700px; max-height: 80vh; overflow-y: auto;
+            background: #151006; border: 3px double var(--glow-color); z-index: 10000;
+            padding: 25px; box-shadow: 0 0 30px rgba(0,0,0,1);
         }
-
-        a:hover {
-            background: var(--glow-color);
-            color: var(--bg-color);
-            text-shadow: none;
-            cursor: pointer;
+        .admin-header { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 2px solid var(--glow-color); padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; text-transform: uppercase; font-weight: bold; }
+        .form-group input, .form-group textarea {
+            width: 100%; background: #000; border: 1px solid var(--border-color);
+            color: var(--glow-color); font-family: var(--font-stack); padding: 8px; outline: none;
         }
-
-        .blink {
-            animation: blinker 1.2s linear infinite;
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--glow-color); }
+        .admin-btn {
+            background: var(--border-color); color: #fff; padding: 8px 15px; border: none;
+            font-family: var(--font-stack); cursor: pointer; text-transform: uppercase;
         }
-
-        @keyframes blinker {
-            50% { opacity: 0; }
-        }
+        .admin-btn:hover { background: var(--glow-color); color: #000; }
+        .close-admin { color: #ff3333; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="terminal-container">
-    
-    <!-- SYSTEM HEADER -->
     <header>
         <div class="header-title">ATLAS_GAMES // SYS_LOG</div>
         <div>STATION: CORE_NODES // ARCHIVE_MODE: ACTIVE</div>
         <div>--------------------------------------------------</div>
     </header>
 
-    <!-- MAIN INTERFACE -->
     <div class="main-grid">
-        
-        <!-- DEVLOGS COLUMN -->
-        <main>
+        <!-- CONTAINER WHERE POSTS GENERATE -->
+        <main id="log-feed">
             
-            <!-- UPDATE ENTRY 02 -->
+            <!-- START OF LIVE POSTS -->
             <div class="update-log">
                 <div class="log-header">
                     <span>LOG_ENTRY: #002</span>
@@ -193,65 +115,101 @@
                 </div>
                 <div class="log-body">
                     <h3>SYSTEM STABILIZATION & WEB PIPELINE</h3>
-                    <p>Successfully routed global transmission lines. The local domain configuration has been securely mapped to the cloud cluster repository. Network handshake anomalies resolved.</p>
-                    <ul>
-                        <li>Implemented strict structural routing updates.</li>
-                        <li>Configured primary host records to balance incoming data payloads.</li>
-                        <li>Initialized public deployment framework.</li>
-                    </ul>
+                    <p>Successfully routed global transmission lines. The local domain configuration has been securely mapped to the cloud cluster repository.</p>
                 </div>
             </div>
-
-            <!-- UPDATE ENTRY 01 -->
-            <div class="update-log">
-                <div class="log-header">
-                    <span>LOG_ENTRY: #001</span>
-                    <span class="date">2026.06.15</span>
-                </div>
-                <div class="log-body">
-                    <h3>PROJECT INITIALIZATION</h3>
-                    <p>Core sandbox tools established. Commencing setup on localized gameplay logic loops, state management architecture, and basic asset pipelines.</p>
-                    <ul>
-                        <li>Established event-bus infrastructure for zero-coupling messaging.</li>
-                        <li>Drafted structural data arrays for engine-level object handling.</li>
-                        <li>Grid translation vectors validated successfully.</li>
-                    </ul>
-                </div>
-            </div>
+            <!-- END OF LIVE POSTS -> LEAVE THIS COMMENT TAG AS AN ANCHOR -->
 
         </main>
 
-        <!-- DIAGNOSTICS SIDEBAR -->
         <aside>
-            
-            <!-- CURRENT STATUS -->
             <div class="side-panel">
                 <div class="panel-title">SYSTEM_STATUS</div>
                 <div class="status-row"><span>HOST:</span> <span>ATLAS-GAMES.NET</span></div>
                 <div class="status-row"><span>NET_CORE:</span> <span class="status-online">ONLINE</span></div>
-                <div class="status-row"><span>SECURITY:</span> <span>HTTPS_ENFORCED</span></div>
-                <div class="status-row"><span>SYS_LOAD:</span> <span class="status-load">CRITICAL</span></div>
             </div>
-
-            <!-- PROJECTS INDEX -->
+            
             <div class="side-panel">
-                <div class="panel-title">ACTIVE_PROJECTS</div>
-                <p style="margin-bottom: 8px;">[PROJECT_01]</p>
-                <p style="font-size: 12px; color: var(--text-dark); margin-bottom: 12px;">
-                    A tactical retro-futurist survival framework built with modular grid execution.
-                </p>
-                <a href="#">ACCESS PROTOCOL DATA_M</a>
+                <div class="panel-title">CONSOLE_ACCESS</div>
+                <a href="#" onclick="toggleAdminPanel()">LAUNCH ADMIN_SHELL</a>
             </div>
-
-            <!-- TERMINAL FOOTER -->
-            <div class="side-panel" style="border: none; font-size: 12px; color: var(--text-dark);">
-                <span>AWAITING INPUT_</span><span class="blink">■</span>
-            </div>
-
         </aside>
-
     </div>
 </div>
+
+<!-- RETRO ENGINE ADMIN OVERLAY -->
+<div id="admin-panel">
+    <div class="admin-header">
+        <h2>[ADMINISTRATION TERMINAL v1.0.4]</h2>
+        <span class="close-admin" onclick="toggleAdminPanel()">[X] CLOSE</span>
+    </div>
+    
+    <div class="form-group">
+        <label>Log Entry Code (e.g., #003)</label>
+        <input type="text" id="post-id" placeholder="#003">
+    </div>
+    <div class="form-group">
+        <label>Update Header Title</label>
+        <input type="text" id="post-title" placeholder="ENGINE UPDATE...">
+    </div>
+    <div class="form-group">
+        <label>Log Summary Text</label>
+        <textarea id="post-body" rows="4" placeholder="Enter log entry narrative..."></textarea>
+    </div>
+    <div class="form-group">
+        <label>Attach System Image (Local File Link / URL)</label>
+        <input type="text" id="post-image" placeholder="assets/images/screenshot01.png">
+    </div>
+    
+    <button class="admin-btn" onclick="generatePostMarkup()">Compile Post Markup</button>
+
+    <div class="form-group" style="margin-top:20px;">
+        <label>Compiled Output (Copy this block into your index.html source)</label>
+        <textarea id="output-markup" rows="6" readonly style="color:#33ff33; border-color:#33ff33;"></textarea>
+    </div>
+</div>
+
+<script>
+    function toggleAdminPanel() {
+        const panel = document.getElementById('admin-panel');
+        panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function generatePostMarkup() {
+        const id = document.getElementById('post-id').value || "#000";
+        const title = document.getElementById('post-title').value || "UNTITLED ENTRY";
+        const body = document.getElementById('post-body').value || "";
+        const imgUrl = document.getElementById('post-image').value;
+        
+        const today = new Date();
+        const dateStr = today.getFullYear() + '.' + String(today.getMonth() + 1).padStart(2, '0') + '.' + String(today.getDate()).padStart(2, '0');
+
+        let imgHtml = "";
+        if(imgUrl.trim() !== "") {
+            imgHtml = `\n                    <img src="${imgUrl}" class="log-image" alt="System Capture">`;
+        }
+
+        // Generate the structural HTML payload matching our CRT styling
+        const markup = `            <!-- START OF NEW POST -->
+            <div class="update-log">
+                <div class="log-header">
+                    <span>LOG_ENTRY: ${id}</span>
+                    <span class="date">${dateStr}</span>
+                </div>
+                <div class="log-body">
+                    <h3>${title.toUpperCase()}</h3>
+                    <p>${body}</p>${imgHtml}
+                </div>
+            </div>
+            <!-- END OF NEW POST -->\n`;
+
+        document.getElementById('output-markup').value = markup;
+        
+        // Instant visual preview on your local view before you commit it!
+        const logFeed = document.getElementById('log-feed');
+        logFeed.insertAdjacentHTML('afterbegin', markup);
+    }
+</script>
 
 </body>
 </html>
